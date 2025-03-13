@@ -78,6 +78,11 @@ public class RedisTestApplication {
 
             commands.del("test:key");
             logger.info("Deleted test:key");
+
+            logger.info("Setting up expiration:test key to delete in 10 seconds...");
+            commands.setex("expiration:test", 10, "Test for expiration");
+            logger.debug("expiration:test value is {}", commands.get("expiration:test"));
+            logger.info("expiration:test key should be deleted in 10 seconds");
         }
         catch (Exception e) {
             logger.error("Redis connection test failed:  {}", e.getMessage());
